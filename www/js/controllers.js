@@ -41,16 +41,26 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
-
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+.controller('TestController', function($scope) {
+  $scope.gender = ['Male', 'Female'];
+  $scope.ageValues = {
+    min: 20,
+    max: 60,
+    value: 20
+  };
+  $scope.distanceValues = {
+    min: 1000,
+    max: 3500,
+    value: 1000
+  };
+  $scope.data = {};
+  $scope.calculateCooper = function() {
+    var person = new Person({
+      gender: $scope.data.gender,
+      age: $scope.data.age
+    });
+    person.assessCooper($scope.data.distance);
+    $scope.person = person;
+    console.log($scope.person);
+  };
 });
