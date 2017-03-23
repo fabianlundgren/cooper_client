@@ -39,9 +39,14 @@ angular.module('starter.controllers', [])
 
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
+    $ionicLoading.show({
+      template: 'Logging in...'
+    });
+
     $auth.submitLogin($scope.loginData)
       .then(function (resp) {
 
+        $ionicLoading.hide();
         $scope.closeLogin();
       })
       .catch(function (error) {
@@ -78,4 +83,20 @@ angular.module('starter.controllers', [])
     $scope.person = person;
     console.log($scope.person);
   };
+})
+
+.controller('PerformanceCtrl', function($scope, performanceData){
+  $scope.saveData = function(){
+  };
+  $scope.retrieveData = function(){
+  };
 });
+
+$scope.saveData = function(person){
+  data = {performance_data: {data: {message: person.cooperMessage}}};
+  performanceData.save(data, function(response){
+    console.log(response);
+  }, function(error){
+    console.log(error);
+  });
+};
