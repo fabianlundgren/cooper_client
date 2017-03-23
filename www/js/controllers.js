@@ -8,7 +8,7 @@ angular.module('starter.controllers', [])
                                 $ionicLoading) {
 
   $rootScope.$on('auth:login-success', function(ev, user) {
-    $scope.currentUser = user;
+  $scope.currentUser = angular.extend(user, $auth.retrieveData('auth_headers'));
   });
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -85,18 +85,48 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PerformanceCtrl', function($scope, performanceData){
-  $scope.saveData = function(){
-  };
-  $scope.retrieveData = function(){
-  };
-});
+.controller('PerformanceCtrl', function($scope, $state, performanceData, $ionicLoading, $ionicPopup){
 
-$scope.saveData = function(person){
-  data = {performance_data: {data: {message: person.cooperMessage}}};
-  performanceData.save(data, function(response){
-    console.log(response);
+  $scope.saveData = function(person){
+    var data = {performance_data: {data: {message: person.cooperMessage}}};
+    $ionicLoading.show({
+      template: 'Saving...'
+    });
+    performanceData.save(data, function(response){
+      $ionicLoading.hide();
+      $scope.showAlert('Sucess', response.message);
+    }, function(error){
+      $ionicLoading.hide();
+      $scope.showAlert('Failure', error.statusText);
+    });
+  };
+
+  $scope.retrieveData = function(){
+    $ionicLoading.show({
+      template: 'Retrieving data...'
+  });
+  performanceData.query({}, function(response){
+    $state.go('app.data', {savedDataCollection: response.entries});
+    $ionicLoading.hide();
   }, function(error){
-    console.log(error);
+    $ionicLoading.hide();
+    $scope.showAlert('Failure', error.statusText);
   });
 };
+
+  $scope.showAlert = function(message, content) {
+    var alertPopup = $ionicPopup.alert({
+      title: message,
+      template: content
+    });
+    alertPopup.then(function(res) {
+    // Place some action here if needed...
+    });
+  };
+})
+
+.controller('DataCtrl', function($scope, $stateParams){
+  $scope.$on('$ionicView.enter', function () {
+    $scope.savedDataCollection = $stateParams.savedDataCollection;
+  });
+});
