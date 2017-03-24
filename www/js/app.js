@@ -70,6 +70,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ng-token-auth', 'sta
       controller: 'DataCtrl'
     }
   }
+})
+.state('app.bmi', {
+  url: '/bmi',
+  views: {
+    'menuContent': {
+      templateUrl: 'templates/calculator/calculator.html',
+      controller: 'BmiController'
+    }
+  }
 });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/about');
