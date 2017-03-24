@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ng-token-auth', 'ngResource', 'chart.js'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ng-token-auth', 'starter.services', 'ngResource', 'chart.js'])
     .constant('API_URL', 'https://fl-cooper-api.herokuapp.com/api/v1')
 
   .config(function ($authProvider, API_URL) {

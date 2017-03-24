@@ -7,7 +7,7 @@ angular.module('starter.controllers', [])
                                 $auth,
                                 $ionicLoading) {
 
-  $rootScope.$on('auth:login-success', function(ev, user) {
+  $rootScope.$on('auth:login-success', function (ev, user) {
   $scope.currentUser = angular.extend(user, $auth.retrieveData('auth_headers'));
   });
   // With the new view caching in Ionic, Controllers are only called
@@ -86,7 +86,6 @@ angular.module('starter.controllers', [])
 })
 
 .controller('PerformanceCtrl', function($scope, $state, performanceData, $ionicLoading, $ionicPopup){
-
   $scope.saveData = function(person){
     var data = {performance_data: {data: {message: person.cooperMessage}}};
     $ionicLoading.show({
@@ -105,6 +104,7 @@ angular.module('starter.controllers', [])
     $ionicLoading.show({
       template: 'Retrieving data...'
   });
+
   performanceData.query({}, function(response){
     $state.go('app.data', {savedDataCollection: response.entries});
     $ionicLoading.hide();
